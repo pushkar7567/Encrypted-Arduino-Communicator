@@ -1,0 +1,46 @@
+//------------------------------------------------------
+// Names: Amro Amanuddein and Pushkar Sabharwal
+// ID's: 1572498 (Amro) 1588927 (Pushkar) 
+// CMPUT274, Fall 2019
+// 
+// Assignment 2 Part 2: Encrypted Arduino Communication
+//------------------------------------------------------
+
+Description: The second part of this assignment was to create a program that uses RSA encryption and decryption to have a secure communication between two arduinos. The Keys are generated using arithmetic with randomly (using the A1 pin) generated prime numbers, Euler's totient and the Extended Euclidean algorithm. The keys are sent from server side to client side and vice-versa using the "handshaking protocol".
+
+Included files in this submission are:
+- encrypted_communication_part2.cpp
+- Makefile
+- README
+
+Required Components: 
+1 x 550 Ohms
+2 x Arduino MEGA Boards
+1 x Breadboard
+
+Wiring Instructions:
+Arduino 1 Pin 13 <--> Arduino 1 GND 
+Arduino 1 GND <--> Arduino 2 GND 
+Arduino 2 5V <--> Breadboard/550 ohm resistor <--> Arduino 2 Pin 13
+Arduino 1 Pin TX3 <--> Arduino 2 Pin RX3
+Arduino 2 Pin TX3 <--> Arduino 1 Pin RX3
+
+Running Instructions:
+While in the directory that contains the MakeFile and the encrypted_communication_part2.cpp file, open two separate terminals and ensure that both the arduino's have been selected using "arduino-port-select" and appoint one of them as port 0 and the other as port 1 (different when testing on two separate machines). In one of the te`rminals use the command "make upload-0 && serial-mon-0" and in the other terminal use "make upload-1 && serial-mon-1". Please reset both the arduinos at the same time if establishing a connection takes too long or if the arduino continuously times out. The Arduinos start the key generation and inititate the handshake. The serial monitors show messages of progress with handshake. When both the serial moniters show "Connected Established! You may chat now!", you are able to type into one or the other serial monitor and it will appear on the other one.
+
+Assumptions:
+- Will not hold down a key.Holding down a key will flood the input buffer and will give wrong output on the other serial-monitor
+-  Will not type extremely extremely fast. Doing this will also flood the input buffer, giving wrong output on the other end. 
+
+Issues:
+- There is a very small chance that when you run/re-run the program, "gibberish" from the previous input buffering may appear. Reset the Arduino's.
+
+References:
+- powmod Files (eClass)
+- Worksheet: RSA #1
+- Worksheet: Extended Euclidean Algorithm + Mods with Negative Numbers
+- Slides: Handshaking and Finite State Machines
+- Code: Finite State Machine Example (email addresses)
+- Worksheet: Modular Multiplication 
+- Morning Problem: primality.cpp
+- There is an extra function that we created which determines who is the client and who is the server (Client_or_Server), we did not do this in setup, and this was fine as confirmed by the TA's in the office and on the forums. "global variables in Assignment#2", TA Bradley Burega said "you aren't absolutely required to determine which arduino is the client/server..within the setup. You can do those things in main." 
